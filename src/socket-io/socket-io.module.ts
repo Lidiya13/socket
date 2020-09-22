@@ -4,8 +4,8 @@ import { NotificationModule } from '../notification/notification.module';
 
 @Module({
   imports: [NotificationModule],
-  providers: [SocketIoGateway]
+  providers: [SocketIoGateway],
 })
-export class SocketIoModule{
+export class SocketIoModule {
 
 }

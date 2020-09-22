@@ -1,4 +1,12 @@
-import { SubscribeMessage, WebSocketGateway, WebSocketServer, OnGatewayDisconnect, OnGatewayConnection, OnGatewayInit, MessageBody } from '@nestjs/websockets';
+import {
+  SubscribeMessage,
+  WebSocketGateway,
+  WebSocketServer,
+  OnGatewayDisconnect,
+  OnGatewayConnection,
+  OnGatewayInit,
+  MessageBody,
+} from '@nestjs/websockets';
 import { Server } from 'socket.io';
 import { Logger } from '@nestjs/common';
 import { EmailNotificationOptions } from './interface/email-notification-options';
@@ -16,7 +24,7 @@ export class SocketIoGateway implements OnGatewayInit, OnGatewayConnection, OnGa
 
   @SubscribeMessage('email_one_notification')
   async subscribeOneEmailNotification(
-    @MessageBody() data: EmailNotificationOptions
+    @MessageBody() data: EmailNotificationOptions,
   ): Promise<void> {
     this.logger.log('Receive email_notification event');
     this.logger.log(data);
@@ -25,14 +33,14 @@ export class SocketIoGateway implements OnGatewayInit, OnGatewayConnection, OnGa
 
   @SubscribeMessage('email_many_notification')
   async subscribeManyEmailNotification(
-    @MessageBody() data: EmailNotificationOptions[]
+    @MessageBody() data: EmailNotificationOptions[],
   ): Promise<void> {
     this.logger.log('Receive email_notification event');
     this.logger.log(data);
-    const transformedData = data.map((item: EmailNotificationOptions) => {
+    /*const transformedData = data.map((item: EmailNotificationOptions) => {
       return item.email;
-    });
-    await this.notificationService.sendMailMultiply(transformedData);
+    });*/
+    await this.notificationService.sendMailMultiply(data);
   }
 
   afterInit(): void {
